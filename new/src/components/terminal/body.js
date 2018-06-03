@@ -4,7 +4,8 @@ import ActionManager from '../../data/actionManager';
 import {
   COMMAND_LINE_PREFIX,
   CURRENT_FOLDER_NAME,
-  WELCOME_MESSAGE,
+  INITIAL_INPUT,
+  WELCOME_MESSAGES,
 } from '../../data/constants';
 
 
@@ -112,25 +113,16 @@ export default class Body extends Component {
   componentDidMount() {
     this.setInitalWelcomeScreen();
     this.setPointerVisibility(true);
-    this.writeToConsole(WELCOME_MESSAGE);
+    this.writeToConsole(INITIAL_INPUT);
 
     this.userInputReference.focus();
     this.w = window; // eslint-disable-line
   }
 
   setInitalWelcomeScreen() {
-    const outputs = [
-      'Welcome to...',
-      '',
-      '.##.....##....###.....######...########.########.########..##.....##',
-      '.###...###...##.##...##....##.....##....##.......##.....##.###...###',
-      '.####.####..##...##..##...........##....##.......##.....##.####.####',
-      '.##.###.##.##.....##.##...####....##....######...########..##.###.##',
-      '.##.....##.#########.##....##.....##....##.......##...##...##.....##',
-      '.##.....##.##.....##.##....##.....##....##.......##....##..##.....##',
-      '.##.....##.##.....##..######......##....########.##.....##.##.....##',
-      '',
-    ].map((output, outputIndex) => this.getOutputLine(output, outputIndex));
+    const outputs = WELCOME_MESSAGES.map((output, outputIndex) => (
+      this.getOutputLine(output, outputIndex)
+    ));
     this.setState({ commandHistory: outputs });
   }
 

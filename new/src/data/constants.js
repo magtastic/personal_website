@@ -42,4 +42,18 @@ export const HELP_FOR_COMMANDS = {
 export const ANSWER_FOR_UNKNOWN_COMMAND = command => ([`command not found: ${command}`]);
 export const ANSWER_FOR_INVALID_COMMAND = command => ([`not correct usage of: '${command}', checkout '${command} --help'`]);
 
-export const WELCOME_MESSAGE = 'list-commands';
+export const WELCOME_MESSAGES = [
+  'Welcome to...',
+  '',
+  '.##.....##....###.....######...########.########.########..##.....##',
+  '.###...###...##.##...##....##.....##....##.......##.....##.###...###',
+  '.####.####..##...##..##...........##....##.......##.....##.####.####',
+  '.##.###.##.##.....##.##...####....##....######...########..##.###.##',
+  '.##.....##.#########.##....##.....##....##.......##...##...##.....##',
+  '.##.....##.##.....##.##....##.....##....##.......##....##..##.....##',
+  '.##.....##.##.....##..######......##....########.##.....##.##.....##',
+  '',
+  'type \'--help\' after any command...',
+];
+
+export const INITIAL_INPUT = 'list-commands';

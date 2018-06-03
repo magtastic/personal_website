@@ -1,6 +1,5 @@
 import {
   VALID_COMMANDS,
-  /*   VALID_SOCIAL_MEDIAS, */
   ANSWERS_FOR_COMMANDS,
   HELP_FOR_COMMANDS,
   ANSWER_FOR_INVALID_COMMAND,
@@ -32,19 +31,19 @@ export default class ActionManager {
                 case 'facebook': {
                   const answers = ANSWERS_FOR_COMMANDS[args.join(' ')];
                   this.addToHistory(args.join(' '), answers);
-                  this.openURL('https://www.facebook.com');
+                  this.openURL('https://www.facebook.com/magnus.n.olafsson?ref=bookmarks');
                   break;
                 }
                 case 'twitter': {
                   const answers = ANSWERS_FOR_COMMANDS[args.join(' ')];
                   this.addToHistory(args.join(' '), answers);
-                  this.openURL('https://www.twitter.com');
+                  this.openURL('https://twitter.com/MLafsson');
                   break;
                 }
                 case 'github': {
                   const answers = ANSWERS_FOR_COMMANDS[args.join(' ')];
                   this.addToHistory(args.join(' '), answers);
-                  this.openURL('https://www.github.com');
+                  this.openURL('https://github.com/magtastic');
                   break;
                 }
                 default: {
