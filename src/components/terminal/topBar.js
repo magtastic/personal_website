@@ -13,6 +13,12 @@ const Container = styled.div`
   padding-left: 6px;
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
+  @media only screen 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+  border-top-left-radius: 3.5px;
+  border-top-right-radius: 3.5px;
+  }
 `;
 
 const buttonRadius = 7;
@@ -24,6 +30,15 @@ const Button = styled.div`
   border-radius: ${buttonRadius}px;
   margin: 6px;
   margin: 6px 3px 6px 3px;
+  @media only screen 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+  width: ${buttonRadius}px;
+  height: ${buttonRadius}px;
+  border-radius: ${buttonRadius / 2}px;
+  margin: 3px;
+  margin: 3px 1.5px 3px 1.5px;
+  }
 `;
 
 export default () => (

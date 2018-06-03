@@ -10,7 +10,13 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 80%;
-  margin-top: 5%;
+  margin-top: 10%;
+
+  @media only screen 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) { 
+    width: 95%;
+  }
 `;
 
 export default () => (

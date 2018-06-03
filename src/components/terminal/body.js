@@ -26,7 +26,14 @@ const Container = styled.div`
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
 
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.7);
+
+  @media only screen 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    border-bottom-left-radius: 3.5px;
+    border-bottom-right-radius:3.5px;
+  }
 `;
 
 const InputLine = styled.div`
@@ -36,6 +43,12 @@ const InputLine = styled.div`
   flex-shrink: 0;
 
   height: 20px;
+  @media only screen 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+  left: ${props => ((props.lineLength) * 5) + 14}px;
+  height: 10px;
+  }
 `;
 
 const PreFixText = styled.p`
@@ -44,6 +57,11 @@ const PreFixText = styled.p`
   font-weight: bold;
 
   color: ${props => (props.isValid ? 'rgb(0,188,55)' : 'rgb(203,56,41)')};
+  @media only screen 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    font-size: 8px;
+  }
 `;
 
 const FolderText = styled.p`
@@ -52,6 +70,12 @@ const FolderText = styled.p`
   font-weight: bold;
 
   color: rgb(0,187,198);
+  @media only screen 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+  padding-right: 5px;
+    font-size: 8px;
+  }
 `;
 
 const UserInput = styled.input`
@@ -69,6 +93,13 @@ const UserInput = styled.input`
 
   color: transparent;
   text-shadow: 0 0 0 rgb(0,253,59);
+
+  @media only screen 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    font-size: 8px;
+  }
+
 `;
 
 const Pointer = styled.span`
@@ -78,6 +109,14 @@ const Pointer = styled.span`
   height: 20px;
 
   background-color: ${props => (props.visible ? 'rgb(0,253,59)' : 'transparent')};
+
+  @media only screen 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+  left: ${props => ((props.lineLength) * 5) + 14}px;
+  width: 5px;
+  height: 10px;
+  }
 `;
 
 
