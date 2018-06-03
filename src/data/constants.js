@@ -13,7 +13,7 @@ export const WELCOME_MESSAGES = [
   '.##.....##.##.....##.##....##.....##....##.......##....##..##.....##',
   '.##.....##.##.....##..######......##....########.##.....##.##.....##',
   '',
-  'type \'--help\' after any command...',
+  'type \'--help\' after any command to get a usage description.',
 ];
 
 export const INITIAL_INPUT = 'list-commands';
@@ -23,7 +23,9 @@ export const VALID_COMMANDS = [
   'about',
   'work',
   'education',
-  'social',
+  'contact',
+  'other',
+  'programming',
   'clear',
   'open',
 ];
@@ -44,6 +46,7 @@ export const SOCIAL_MEDIAS_TO_URLS = {
   'source-code': 'https://github.com/magtastic/cv',
 };
 
+// TODO: fix answers
 export const ANSWERS_FOR_COMMANDS = {
   'list-commands': VALID_COMMANDS,
   'open facebook': ['opening facebook...'],
@@ -51,20 +54,111 @@ export const ANSWERS_FOR_COMMANDS = {
   'open github': ['opening github...'],
   'open instagram': ['opening instagram...'],
   'open source-code': ['opening source-code...'],
-  about: ['My name is Magnús and I am a developer'],
-  work: ['I am currently working for a company named GameSmash'],
-  education: ['I graduated from the University of Iceland with a Bs.c. in Software Engineering'],
-  social: ['Find me on all major social media under the tag: Magtastic'],
+  about: [
+    'My name is Magnús and I am a software developer.',
+    'I live Valencia, with my girlfriend, and our cat and dog.',
+  ],
+  work: [
+    'I did some video editing and producing for 365 and RÚV for a couple of years...',
+    '...worked in a startup named Klang, based in Berlin...',
+    '...and am currently working on a startup named GameSmash, based in Iceland.',
+  ],
+  education: ['I graduated from the University of Iceland with a Bs.c. in Software Engineering.'],
+  other: [
+    'I typically use the handle \'Magtastic\' on social media.',
+    'I love spicy food and vim.',
+    'One friend of mine once told me that I was one of the smartest person he knows.',
+    'He knows a lot of smart people.',
+  ],
+  contact: ['Phone: +354 847 0454', 'Email: Magnusol93@gmail.com'],
+  programming: [
+    '===============',
+    'Love:',
+    ' - JavaScript',
+    ' - VIM',
+    ' - Node',
+    ' - React',
+    ' - React Native',
+    ' - ReasonML',
+    ' - Firebase',
+    ' - Google Cloud Platform',
+    '===============',
+    'Like:',
+    ' - Python',
+    ' - GoLang',
+    ' - Swift',
+    '===============',
+    'Know:',
+    ' - Java',
+    ' - C++',
+    ' - C#',
+    '===============',
+    'Hate The Fact That I Know:',
+    ' - XCode',
+    ' - Android Studio',
+    ' - Build Times...',
+    '===============',
+  ],
 };
 
 export const HELP_FOR_COMMANDS = {
-  'list-commands': ['Usage: list-commands', '', 'Description:', 'lists all valid commands in MagTerm'],
-  about: ['Usage: about', '', 'Description:', 'Displays a short description of Magnús'],
-  work: ['Usage: work', '', 'Description:', 'Displays a list of some of the work done by Magnús'],
-  education: ['Usage: education', '', 'Description:', 'Displays summary of the education Magnús has under his belt'],
-  social: ['Usage: social', '', 'Description:', 'Displays something social about Magnús'],
-  clear: ['Usage: clear', '', 'Description:', 'Clears your MagTerm histroy'],
-  open: ['Usage: open <site>', '', 'Where <site> is one of the following', ...VALID_SOCIAL_MEDIAS, '', 'Description:', 'Opens <site> in another tab'],
+  'list-commands': [
+    'Usage: list-commands',
+    '',
+    'Description:',
+    'Lists all valid commands in MagTerm',
+  ],
+  about: [
+    'Usage: about',
+    '',
+    'Description:',
+    'Displays a short description of me',
+  ],
+  work: [
+    'Usage: work',
+    '',
+    'Description:',
+    'Displays a list of work that I have done',
+  ],
+  education: [
+    'Usage: education',
+    '',
+    'Description:',
+    'Displays summary of my education',
+  ],
+  other: [
+    'Usage: social',
+    '',
+    'Description:',
+    'Displays some other random facts about me',
+  ],
+  clear: [
+    'Usage: clear',
+    '',
+    'Description:',
+    'Clears your MagTerm histroy',
+  ],
+  contact: [
+    'Usage: contact',
+    '',
+    'Description:',
+    'Displays contact information',
+  ],
+  open: [
+    'Usage: open <site>',
+    '',
+    'Where <site> is one of the following',
+    ...VALID_SOCIAL_MEDIAS,
+    '',
+    'Description:',
+    'Opens <site> in another tab',
+  ],
+  programming: [
+    'Usage: programming',
+    '',
+    'Description:',
+    'Displays a list that should describe me as a programmer in some way',
+  ],
 };
 
 export const ANSWER_FOR_UNKNOWN_COMMAND = command => ([`command not found: ${command}`]);

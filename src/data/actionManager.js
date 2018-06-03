@@ -47,6 +47,8 @@ export default class ActionManager {
           }
         }
       }
+    } else if (args.length === 1 && args[0] === '') {
+      this.addToHistory(args.join(' '), [], true);
     } else {
       this.addToHistory(args.join(' '), ANSWER_FOR_UNKNOWN_COMMAND(args), false);
     }
