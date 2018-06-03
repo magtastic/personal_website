@@ -95,6 +95,7 @@ export default class Body extends Component {
     this.addToHistory = this.addToHistory.bind(this);
     this.getOutputLine = this.getOutputLine.bind(this);
     this.getInputLine = this.getInputLine.bind(this);
+    this.setInitalWelcomeScreen = this.setInitalWelcomeScreen.bind(this);
 
     /*  ===    INITAL STATE    === */
     this.state = {
@@ -105,10 +106,27 @@ export default class Body extends Component {
   }
 
   componentDidMount() {
+    this.setInitalWelcomeScreen();
     this.setPointerVisibility(true);
     this.writeToConsole(WELCOME_MESSAGE);
     setTimeout(this.typeHelp, 400);
     this.userInputReference.focus();
+  }
+
+  setInitalWelcomeScreen() {
+    const outputs = [
+      'Welcome to...',
+      '',
+      '.##.....##....###.....######...########.########.########..##.....##',
+      '.###...###...##.##...##....##.....##....##.......##.....##.###...###',
+      '.####.####..##...##..##...........##....##.......##.....##.####.####',
+      '.##.###.##.##.....##.##...####....##....######...########..##.###.##',
+      '.##.....##.#########.##....##.....##....##.......##...##...##.....##',
+      '.##.....##.##.....##.##....##.....##....##.......##....##..##.....##',
+      '.##.....##.##.....##..######......##....########.##.....##.##.....##',
+      '',
+    ].map((output, outputIndex) => this.getOutputLine(output, outputIndex));
+    this.setState({ commandHistory: outputs });
   }
 
   setPointerVisibility(pointerVisible) {

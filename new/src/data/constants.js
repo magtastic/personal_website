@@ -21,5 +21,4 @@ export const ANSWERS_FOR_COMMANDS = {
 
 export const ANSWER_FOR_INVALID_COMMAND = command => ([`command not found: ${command}`]);
 
-export const WELCOME_MESSAGE = `Welcome to the site! 
-Type '--help' to get started.`;
+export const WELCOME_MESSAGE = 'Type \'--help\' to get started.';
