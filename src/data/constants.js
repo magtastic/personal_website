@@ -32,13 +32,25 @@ export const VALID_SOCIAL_MEDIAS = [
   'facebook',
   'twitter',
   'github',
+  'source-code',
+  'instagram',
 ];
+
+export const SOCIAL_MEDIAS_TO_URLS = {
+  facebook: 'https://www.facebook.com/magnus.n.olafsson?ref=bookmarks',
+  twitter: 'https://twitter.com/MLafsson',
+  github: 'https://github.com/magtastic',
+  instagram: 'https://www.instagram.com/magtastic_fingerplastic',
+  'source-code': 'https://github.com/magtastic/cv',
+};
 
 export const ANSWERS_FOR_COMMANDS = {
   'list-commands': VALID_COMMANDS,
   'open facebook': ['opening facebook...'],
   'open twitter': ['opening twitter...'],
   'open github': ['opening github...'],
+  'open instagram': ['opening instagram...'],
+  'open source-code': ['opening source-code...'],
   about: ['My name is Magnús and I am a developer'],
   work: ['I am currently working for a company named GameSmash'],
   education: ['I graduated from the University of Iceland with a Bs.c. in Software Engineering'],

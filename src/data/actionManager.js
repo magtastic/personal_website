@@ -5,6 +5,7 @@ import {
   ANSWER_FOR_INVALID_COMMAND,
   ANSWER_FOR_UNKNOWN_COMMAND,
   VALID_SOCIAL_MEDIAS,
+  SOCIAL_MEDIAS_TO_URLS,
 } from './constants';
 
 export default class ActionManager {
@@ -27,30 +28,10 @@ export default class ActionManager {
           }
           case 'open': {
             if (args.length === 2 && VALID_SOCIAL_MEDIAS.includes(args[1])) {
-              switch (args[1]) {
-                case 'facebook': {
-                  const answers = ANSWERS_FOR_COMMANDS[args.join(' ')];
-                  this.addToHistory(args.join(' '), answers, true);
-                  this.openURL('https://www.facebook.com/magnus.n.olafsson?ref=bookmarks');
-                  break;
-                }
-                case 'twitter': {
-                  const answers = ANSWERS_FOR_COMMANDS[args.join(' ')];
-                  this.addToHistory(args.join(' '), answers, true);
-                  this.openURL('https://twitter.com/MLafsson');
-                  break;
-                }
-                case 'github': {
-                  const answers = ANSWERS_FOR_COMMANDS[args.join(' ')];
-                  this.addToHistory(args.join(' '), answers, true);
-                  this.openURL('https://github.com/magtastic');
-                  break;
-                }
-                default: {
-                  this.addToHistory(args.join(' '), ANSWER_FOR_INVALID_COMMAND(args[0]), false);
-                  break;
-                }
-              }
+              const answers = ANSWERS_FOR_COMMANDS[args.join(' ')];
+              const url = SOCIAL_MEDIAS_TO_URLS[args[1]];
+              this.addToHistory(args.join(' '), answers, true);
+              this.openURL(url);
             } else {
               this.addToHistory(args.join(' '), ANSWER_FOR_INVALID_COMMAND(args[0]), false);
             }
