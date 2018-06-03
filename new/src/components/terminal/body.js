@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import ActionManager from '../../data/actionManager';
 import {
-  VALID_COMMANDS,
   COMMAND_LINE_PREFIX,
   CURRENT_FOLDER_NAME,
-  ANSWERS_FOR_COMMANDS,
-  ANSWER_FOR_INVALID_COMMAND,
   WELCOME_MESSAGE,
 } from '../../data/constants';
 
@@ -96,6 +94,12 @@ export default class Body extends Component {
     this.getOutputLine = this.getOutputLine.bind(this);
     this.getInputLine = this.getInputLine.bind(this);
     this.setInitalWelcomeScreen = this.setInitalWelcomeScreen.bind(this);
+    this.clearHistory = this.clearHistory.bind(this);
+    this.openURL = this.openURL.bind(this);
+
+    /*  ===    CLASS VARIABLES    === */
+    this.actionManager = new ActionManager(this.addToHistory, this.clearHistory, this.openURL);
+    this.w = null;
 
     /*  ===    INITAL STATE    === */
     this.state = {
@@ -109,8 +113,9 @@ export default class Body extends Component {
     this.setInitalWelcomeScreen();
     this.setPointerVisibility(true);
     this.writeToConsole(WELCOME_MESSAGE);
-    setTimeout(this.typeHelp, 400);
+
     this.userInputReference.focus();
+    this.w = window; // eslint-disable-line
   }
 
   setInitalWelcomeScreen() {
@@ -157,6 +162,7 @@ export default class Body extends Component {
     );
   }
 
+
   getOutputLine(output, index) {
     return (
       <InputLine
@@ -168,6 +174,24 @@ export default class Body extends Component {
           value={output}
         />
       </InputLine>);
+  }
+
+  writeToConsole(command) {
+    const timeBetweenInput = 90;
+    command.split('').forEach((char, index) => {
+      setTimeout(() => {
+        this.setState(state => (
+          { userInput: state.userInput.concat(char) }
+        ));
+      }, timeBetweenInput * (index + 1));
+    });
+  }
+
+  /*  ===    ACTIONS    === */
+  openURL(url) {
+    if (this.w) {
+      this.w.open(url, '_blank');
+    }
   }
 
   addToHistory(input, outputs) {
@@ -183,29 +207,15 @@ export default class Body extends Component {
     });
   }
 
-  writeToConsole(command) {
-    const timeBetweenInput = 90;
-    command.split('').forEach((char, index) => {
-      setTimeout(() => {
-        this.setState(state => (
-          { userInput: state.userInput.concat(char) }
-        ));
-      }, timeBetweenInput * (index + 1));
-    });
+  clearHistory() {
+    this.setState({ commandHistory: [], userInput: '' });
   }
 
+
+  /*  ===    INPUT HANDLERS    === */
   handleEnter() {
-    const command = this.state.userInput;
-    if (VALID_COMMANDS.includes(command)) {
-      const answers = ANSWERS_FOR_COMMANDS[command];
-      if (command === 'clear') {
-        this.setState({ commandHistory: [], userInput: '' });
-      } else {
-        this.addToHistory(command, answers);
-      }
-    } else {
-      this.addToHistory(command, ANSWER_FOR_INVALID_COMMAND(command));
-    }
+    const command = this.state.userInput.split(' ');
+    this.actionManager.handleInput(command);
   }
 
   handleKeyPress(e) {
@@ -221,6 +231,7 @@ export default class Body extends Component {
   render() {
     return (
       <Container
+        onClick={() => this.userInputReference.focus()}
         innerRef={(input) => { this.scrollView = input; }}
       >
         {this.state.commandHistory}
