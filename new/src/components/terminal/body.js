@@ -1,91 +1,199 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import {
+  VALID_COMMANDS,
+  COMMAND_LINE_PREFIX,
+  CURRENT_FOLDER_NAME,
+  ANSWERS_FOR_COMMANDS,
+  ANSWER_FOR_INVALID_COMMAND,
+  WELCOME_MESSAGE,
+} from '../../data/constants';
 
-const PREFIX = '➜ ';
-const CURRENT_FOLDER_NAME = 'Magtastic';
 
 const Container = styled.div`
+  position: relative;
   display: flex;
-  flex: 1;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  flex: 0 0 auto;
+
   width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
+  height: 500px;
+
   padding: 3px;
+
+  overflow: scroll;
+
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
-  height: 500px;
+
+  background: rgba(0,0,0,0.5);
 `;
 
 const InputLine = styled.div`
   display: flex;
-  flex: 1;
-  height: 30px;
-  align-items: center;
   flex-direction: row;
-  margin: 6px;
+  align-items: center;
+  flex-shrink: 0;
+
+  height: 20px;
 `;
 
 const PreFixText = styled.p`
-  color: rgb(0,188,55);
-  font-weight: bold;
   padding-right: 10px;
+
+  font-weight: bold;
+
+  color: rgb(0,188,55);
 `;
 
 const FolderText = styled.p`
-  color: rgb(0,187,198);
-  font-weight: bold;
   padding-right: 10px;
+
+  font-weight: bold;
+
+  color: rgb(0,187,198);
 `;
 
 const UserInput = styled.input`
+  width: 100%;
+
   background-color: transparent;
   border-color: transparent;
   outline: none;
   -webkit-box-shadow: none;
   box-shadow: none;
-  color: transparent;
-  text-shadow: 0 0 0 rgb(0,253,59);
+  cursor: default !important;
+
   font-family: "Fira Code";
   font-size: 11pt;
-  width: ${props => (props.value.length) * 8.9}px;
+
+  color: transparent;
+  text-shadow: 0 0 0 rgb(0,253,59);
 `;
 
 const Pointer = styled.span`
-  background-color: ${props => (props.visible ? 'rgb(0,253,59)' : 'transparent')};
-  left: 10px;
+  position: absolute;
+  left: ${props => ((props.lineLength) * 9) + 30}px;
   width: 10px;
-  height: 70%;
+  height: 20px;
+
+  background-color: ${props => (props.visible ? 'rgb(0,253,59)' : 'transparent')};
 `;
 
 
 export default class Body extends Component {
   constructor(props) {
     super(props);
-    this.showPointer = this.showPointer.bind(this);
-    this.hidePointer = this.hidePointer.bind(this);
+
+    /*  ===    BINDINGS    === */
+    this.setPointerVisibility = this.setPointerVisibility.bind(this);
     this.handleUserInput = this.handleUserInput.bind(this);
+    this.handleEnter = this.handleEnter.bind(this);
+    this.writeToConsole = this.writeToConsole.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.addToHistory = this.addToHistory.bind(this);
+    this.getOutputLine = this.getOutputLine.bind(this);
+    this.getInputLine = this.getInputLine.bind(this);
+
+    /*  ===    INITAL STATE    === */
     this.state = {
       pointerVisible: true,
       userInput: '',
+      commandHistory: [],
     };
   }
 
   componentDidMount() {
-    this.showPointer();
+    this.setPointerVisibility(true);
+    this.writeToConsole(WELCOME_MESSAGE);
+    setTimeout(this.typeHelp, 400);
+    this.userInputReference.focus();
   }
 
-  showPointer() {
-    this.setState({ pointerVisible: true });
+  setPointerVisibility(pointerVisible) {
+    this.setState({ pointerVisible });
+
     setTimeout(() => {
-      this.hidePointer();
+      this.setPointerVisibility(!pointerVisible);
     }, 600);
   }
 
-  hidePointer() {
-    this.setState({ pointerVisible: false });
-    setTimeout(() => {
-      this.showPointer();
-    }, 600);
+  getInputLine(input) {
+    return (
+      <InputLine
+        key={`${this.state.commandHistory.length} command`}
+      >
+        <PreFixText>
+          {COMMAND_LINE_PREFIX}
+        </PreFixText>
+        <FolderText>
+          {CURRENT_FOLDER_NAME}
+        </FolderText>
+        <UserInput
+          readOnly
+          spellCheck={false}
+          value={input}
+        />
+      </InputLine>
+    );
+  }
+
+  getOutputLine(output, index) {
+    return (
+      <InputLine
+        key={`${this.state.commandHistory.length}:${index} answer`}
+      >
+        <UserInput
+          readOnly
+          spellCheck={false}
+          value={output}
+        />
+      </InputLine>);
+  }
+
+  addToHistory(input, outputs) {
+    const command = this.getInputLine(input);
+
+    const answers = outputs.map((output, outputIndex) => this.getOutputLine(output, outputIndex));
+
+    this.setState((state) => {
+      const updatedHistory = [...state.commandHistory, [command, answers]];
+      return { commandHistory: updatedHistory, userInput: '' };
+    }, () => {
+      this.scrollView.scrollTop = this.scrollView.scrollHeight;
+    });
+  }
+
+  writeToConsole(command) {
+    const timeBetweenInput = 90;
+    command.split('').forEach((char, index) => {
+      setTimeout(() => {
+        this.setState(state => (
+          { userInput: state.userInput.concat(char) }
+        ));
+      }, timeBetweenInput * (index + 1));
+    });
+  }
+
+  handleEnter() {
+    const command = this.state.userInput;
+    if (VALID_COMMANDS.includes(command)) {
+      const answers = ANSWERS_FOR_COMMANDS[command];
+      if (command === 'clear') {
+        this.setState({ commandHistory: [], userInput: '' });
+      } else {
+        this.addToHistory(command, answers);
+      }
+    } else {
+      this.addToHistory(command, ANSWER_FOR_INVALID_COMMAND(command));
+    }
+  }
+
+  handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.handleEnter();
+    }
   }
 
   handleUserInput(e) {
@@ -94,10 +202,13 @@ export default class Body extends Component {
 
   render() {
     return (
-      <Container>
+      <Container
+        innerRef={(input) => { this.scrollView = input; }}
+      >
+        {this.state.commandHistory}
         <InputLine>
           <PreFixText>
-            {PREFIX}
+            {COMMAND_LINE_PREFIX}
           </PreFixText>
 
           <FolderText>
@@ -107,8 +218,17 @@ export default class Body extends Component {
             spellCheck={false}
             value={this.state.userInput}
             onChange={this.handleUserInput}
+            onKeyPress={this.handleKeyPress}
+            innerRef={(input) => { this.userInputReference = input; }}
           />
-          <Pointer visible={this.state.pointerVisible} />
+          <Pointer
+            visible={this.state.pointerVisible}
+            lineLength={
+              COMMAND_LINE_PREFIX.length +
+              CURRENT_FOLDER_NAME.length +
+              this.state.userInput.length
+            }
+          />
         </InputLine >
       </Container >
     );
