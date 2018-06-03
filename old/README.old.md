@@ -1,2 +1,0 @@
-# cv
-My personal website
