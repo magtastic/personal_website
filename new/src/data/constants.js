@@ -1,3 +1,23 @@
+export const COMMAND_LINE_PREFIX = '➜ ';
+
+export const CURRENT_FOLDER_NAME = 'Magtastic';
+
+export const WELCOME_MESSAGES = [
+  'Welcome to...',
+  '',
+  '.##.....##....###.....######...########.########.########..##.....##',
+  '.###...###...##.##...##....##.....##....##.......##.....##.###...###',
+  '.####.####..##...##..##...........##....##.......##.....##.####.####',
+  '.##.###.##.##.....##.##...####....##....######...########..##.###.##',
+  '.##.....##.#########.##....##.....##....##.......##...##...##.....##',
+  '.##.....##.##.....##.##....##.....##....##.......##....##..##.....##',
+  '.##.....##.##.....##..######......##....########.##.....##.##.....##',
+  '',
+  'type \'--help\' after any command...',
+];
+
+export const INITIAL_INPUT = 'list-commands';
+
 export const VALID_COMMANDS = [
   'list-commands',
   'about',
@@ -13,10 +33,6 @@ export const VALID_SOCIAL_MEDIAS = [
   'twitter',
   'github',
 ];
-
-export const COMMAND_LINE_PREFIX = '➜ ';
-
-export const CURRENT_FOLDER_NAME = 'Magtastic';
 
 export const ANSWERS_FOR_COMMANDS = {
   'list-commands': VALID_COMMANDS,
@@ -41,19 +57,3 @@ export const HELP_FOR_COMMANDS = {
 
 export const ANSWER_FOR_UNKNOWN_COMMAND = command => ([`command not found: ${command}`]);
 export const ANSWER_FOR_INVALID_COMMAND = command => ([`not correct usage of: '${command}', checkout '${command} --help'`]);
-
-export const WELCOME_MESSAGES = [
-  'Welcome to...',
-  '',
-  '.##.....##....###.....######...########.########.########..##.....##',
-  '.###...###...##.##...##....##.....##....##.......##.....##.###...###',
-  '.####.####..##...##..##...........##....##.......##.....##.####.####',
-  '.##.###.##.##.....##.##...####....##....######...########..##.###.##',
-  '.##.....##.#########.##....##.....##....##.......##...##...##.....##',
-  '.##.....##.##.....##.##....##.....##....##.......##....##..##.....##',
-  '.##.....##.##.....##..######......##....########.##.....##.##.....##',
-  '',
-  'type \'--help\' after any command...',
-];
-
-export const INITIAL_INPUT = 'list-commands';

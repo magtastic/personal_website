@@ -18,7 +18,7 @@ export default class ActionManager {
     if (VALID_COMMANDS.includes(args[0])) {
       if (args.includes('--help')) {
         const answers = HELP_FOR_COMMANDS[args[0]];
-        this.addToHistory(args.join(' '), answers);
+        this.addToHistory(args.join(' '), answers, true);
       } else {
         switch (args[0]) {
           case 'clear': {
@@ -30,44 +30,44 @@ export default class ActionManager {
               switch (args[1]) {
                 case 'facebook': {
                   const answers = ANSWERS_FOR_COMMANDS[args.join(' ')];
-                  this.addToHistory(args.join(' '), answers);
+                  this.addToHistory(args.join(' '), answers, true);
                   this.openURL('https://www.facebook.com/magnus.n.olafsson?ref=bookmarks');
                   break;
                 }
                 case 'twitter': {
                   const answers = ANSWERS_FOR_COMMANDS[args.join(' ')];
-                  this.addToHistory(args.join(' '), answers);
+                  this.addToHistory(args.join(' '), answers, true);
                   this.openURL('https://twitter.com/MLafsson');
                   break;
                 }
                 case 'github': {
                   const answers = ANSWERS_FOR_COMMANDS[args.join(' ')];
-                  this.addToHistory(args.join(' '), answers);
+                  this.addToHistory(args.join(' '), answers, true);
                   this.openURL('https://github.com/magtastic');
                   break;
                 }
                 default: {
-                  this.addToHistory(args.join(' '), ANSWER_FOR_INVALID_COMMAND(args[0]));
+                  this.addToHistory(args.join(' '), ANSWER_FOR_INVALID_COMMAND(args[0]), false);
                   break;
                 }
               }
             } else {
-              this.addToHistory(args.join(' '), ANSWER_FOR_INVALID_COMMAND(args[0]));
+              this.addToHistory(args.join(' '), ANSWER_FOR_INVALID_COMMAND(args[0]), false);
             }
             break;
           }
           default: {
             if (args.length === 1) {
               const answers = ANSWERS_FOR_COMMANDS[args[0]];
-              this.addToHistory(args.join(' '), answers);
+              this.addToHistory(args.join(' '), answers, true);
             } else {
-              this.addToHistory(args.join(' '), ANSWER_FOR_INVALID_COMMAND[args.join(' ')]);
+              this.addToHistory(args.join(' '), ANSWER_FOR_INVALID_COMMAND[args.join(' ')], false);
             }
           }
         }
       }
     } else {
-      this.addToHistory(args.join(' '), ANSWER_FOR_UNKNOWN_COMMAND(args));
+      this.addToHistory(args.join(' '), ANSWER_FOR_UNKNOWN_COMMAND(args), false);
     }
   }
 }

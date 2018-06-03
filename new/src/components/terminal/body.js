@@ -43,7 +43,7 @@ const PreFixText = styled.p`
 
   font-weight: bold;
 
-  color: rgb(0,188,55);
+  color: ${props => (props.isValid ? 'rgb(0,188,55)' : 'rgb(203,56,41)')};
 `;
 
 const FolderText = styled.p`
@@ -106,6 +106,7 @@ export default class Body extends Component {
     this.state = {
       pointerVisible: true,
       userInput: '',
+      commandIsValid: true,
       commandHistory: [],
     };
   }
@@ -139,7 +140,7 @@ export default class Body extends Component {
       <InputLine
         key={`${this.state.commandHistory.length} command`}
       >
-        <PreFixText>
+        <PreFixText isValid={this.state.commandIsValid}>
           {COMMAND_LINE_PREFIX}
         </PreFixText>
         <FolderText>
@@ -153,7 +154,6 @@ export default class Body extends Component {
       </InputLine>
     );
   }
-
 
   getOutputLine(output, index) {
     return (
@@ -186,23 +186,22 @@ export default class Body extends Component {
     }
   }
 
-  addToHistory(input, outputs) {
+  addToHistory(input, outputs, isValid) {
     const command = this.getInputLine(input);
 
     const answers = outputs.map((output, outputIndex) => this.getOutputLine(output, outputIndex));
 
     this.setState((state) => {
       const updatedHistory = [...state.commandHistory, [command, answers]];
-      return { commandHistory: updatedHistory, userInput: '' };
+      return { commandHistory: updatedHistory, userInput: '', commandIsValid: isValid };
     }, () => {
       this.scrollView.scrollTop = this.scrollView.scrollHeight;
     });
   }
 
   clearHistory() {
-    this.setState({ commandHistory: [], userInput: '' });
+    this.setState({ commandHistory: [], userInput: '', commandIsValid: true });
   }
-
 
   /*  ===    INPUT HANDLERS    === */
   handleEnter() {
@@ -228,7 +227,7 @@ export default class Body extends Component {
       >
         {this.state.commandHistory}
         <InputLine>
-          <PreFixText>
+          <PreFixText isValid={this.state.commandIsValid}>
             {COMMAND_LINE_PREFIX}
           </PreFixText>
 
