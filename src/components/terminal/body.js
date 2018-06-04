@@ -101,6 +101,7 @@ const UserInput = styled.input`
   font-family: "Fira Code";
   font-size: 11pt;
 
+  caret-color: transparent;
   color: transparent;
   text-shadow: 0 0 0 rgb(0,253,59);
 
