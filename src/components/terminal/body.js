@@ -17,6 +17,8 @@ const Container = styled.div`
   flex: 0 0 auto;
 
   width: 100%;
+
+
   height: 600px;
 
   padding: 3px;
@@ -33,6 +35,14 @@ const Container = styled.div`
   and (-webkit-min-device-pixel-ratio: 2) {
     border-bottom-left-radius: 3.5px;
     border-bottom-right-radius:3.5px;
+  }
+
+  @media only screen and (max-device-height: 700px) {
+    height: 500px;
+  }
+
+  @media only screen and (max-device-height: 600px) {
+    height: 450px;
   }
 `;
 

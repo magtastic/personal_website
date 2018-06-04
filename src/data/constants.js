@@ -56,7 +56,7 @@ export const ANSWERS_FOR_COMMANDS = {
   'open source-code': ['opening source-code...'],
   about: [
     'My name is Magnús and I am a software developer.',
-    'I live Valencia, with my girlfriend, and our cat and dog.',
+    'I live in Valencia, with my girlfriend, and our cat and dog.',
   ],
   work: [
     'I did some video editing/producing for 365/RÚV for a couple of years...',
