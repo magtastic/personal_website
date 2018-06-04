@@ -285,6 +285,7 @@ export default class Body extends Component {
           </FolderText>
           <UserInput
             spellCheck={false}
+            autoCapitalize="none"
             value={this.state.userInput}
             onChange={this.handleUserInput}
             onKeyPress={this.handleKeyPress}
