@@ -72,7 +72,6 @@ export const ANSWERS_FOR_COMMANDS = {
   ],
   contact: ['Phone: +354 847 0454', 'Email: Magnusol93@gmail.com'],
   programming: [
-    '===============',
     'Love:',
     ' - JavaScript',
     ' - VIM',
@@ -85,8 +84,11 @@ export const ANSWERS_FOR_COMMANDS = {
     '===============',
     'Like:',
     ' - Python',
+    ' - Ruby',
     ' - GoLang',
     ' - Swift',
+    ' - GraphQL',
+    ' - Amazon Web Services',
     '===============',
     'Know:',
     ' - Java',
@@ -97,7 +99,6 @@ export const ANSWERS_FOR_COMMANDS = {
     ' - XCode',
     ' - Android Studio',
     ' - Build Times...',
-    '===============',
   ],
 };
 
