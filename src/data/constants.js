@@ -36,6 +36,7 @@ export const VALID_SOCIAL_MEDIAS = [
   'github',
   'source-code',
   'instagram',
+  'twitch',
 ];
 
 export const SOCIAL_MEDIAS_TO_URLS = {
@@ -43,6 +44,7 @@ export const SOCIAL_MEDIAS_TO_URLS = {
   twitter: 'https://twitter.com/MLafsson',
   github: 'https://github.com/magtastic',
   instagram: 'https://www.instagram.com/magtastic_fingerplastic',
+  twitch: 'https://www.twitch.tv/magtastic_fingerplastic/',
   'source-code': 'https://github.com/magtastic/cv',
 };
 
@@ -54,6 +56,7 @@ export const ANSWERS_FOR_COMMANDS = {
   'open github': ['opening github...'],
   'open instagram': ['opening instagram...'],
   'open source-code': ['opening source-code...'],
+  'open twitch': ['opening twitch...'],
   about: [
     'My name is Magnús and I am a software developer.',
     'I live in Valencia, with my girlfriend, and our cat and dog.',
@@ -67,8 +70,8 @@ export const ANSWERS_FOR_COMMANDS = {
   other: [
     'I typically use the handle \'Magtastic\' on social media.',
     'I love spicy food and VIM.',
-    'A friend once told me that I was one of the smartest person he knew.',
-    'He knows a lot of smart people.',
+    'I stream livestream my coding sessions from time to time.',
+    'type "open twitch" to open my twitch account.',
   ],
   contact: ['Phone: +354 847 0454', 'Email: Magnusol93@gmail.com'],
   programming: [
