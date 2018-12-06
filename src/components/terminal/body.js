@@ -28,7 +28,7 @@ const Container = styled.div`
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
 
-  background: rgba(0,0,0,0.7);
+  background-color: rgba(0,0,0,0.7);
 
   @media only screen 
   and (max-device-width: 480px)

@@ -84,6 +84,7 @@ export const ANSWERS_FOR_COMMANDS = {
     ' - ReasonML',
     ' - Firebase',
     ' - Google Cloud Platform',
+    ' - Zolang',
     '===============',
     'Like:',
     ' - Python',

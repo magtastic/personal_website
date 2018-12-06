@@ -11,3 +11,10 @@ body {
   background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
+::-webkit-scrollbar {
+  width: 0px;
+  /* remove scrollbar space */
+  background: transparent;
+  /* optional: just make scrollbar invisible */
+}
