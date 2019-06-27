@@ -3,14 +3,15 @@
         "airbnb",
         "prettier"
     ],
-    "globals": {
-        "document": true,
-        "window": true,
-        "URL": true,
-        "navigator": true,
-        "fetch": true
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "es6": true
     },
     "rules": {
-        "react/jsx-filename-extension": 0
+        "react/display-name": 0,
+        "react/jsx-filename-extension": 0,
+        "react/no-unescaped-entities": 0,
+        "no-console": 0
     }
 }

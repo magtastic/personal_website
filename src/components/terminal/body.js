@@ -8,7 +8,6 @@ import {
   WELCOME_MESSAGES,
 } from '../../data/constants';
 
-
 const Container = styled.div`
   position: relative;
   display: flex;
@@ -17,7 +16,6 @@ const Container = styled.div`
   flex: 0 0 auto;
 
   width: 100%;
-
 
   height: 600px;
 
@@ -28,13 +26,11 @@ const Container = styled.div`
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
 
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0, 0, 0, 0.7);
 
-  @media only screen 
-  and (max-device-width: 480px)
-  and (-webkit-min-device-pixel-ratio: 2) {
+  @media only screen and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
     border-bottom-left-radius: 3.5px;
-    border-bottom-right-radius:3.5px;
+    border-bottom-right-radius: 3.5px;
   }
 
   @media only screen and (max-device-height: 700px) {
@@ -53,11 +49,9 @@ const InputLine = styled.div`
   flex-shrink: 0;
 
   height: 20px;
-  @media only screen 
-  and (max-device-width: 480px)
-  and (-webkit-min-device-pixel-ratio: 2) {
-  left: ${props => ((props.lineLength) * 5) + 14}px;
-  height: 10px;
+  @media only screen and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+    left: ${props => props.lineLength * 5 + 14}px;
+    height: 10px;
   }
 `;
 
@@ -67,9 +61,7 @@ const PreFixText = styled.p`
   font-weight: bold;
 
   color: ${props => (props.isValid ? 'rgb(0,188,55)' : 'rgb(203,56,41)')};
-  @media only screen 
-  and (max-device-width: 480px)
-  and (-webkit-min-device-pixel-ratio: 2) {
+  @media only screen and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
     font-size: 8px;
   }
 `;
@@ -79,11 +71,9 @@ const FolderText = styled.p`
 
   font-weight: bold;
 
-  color: rgb(0,187,198);
-  @media only screen 
-  and (max-device-width: 480px)
-  and (-webkit-min-device-pixel-ratio: 2) {
-  padding-right: 5px;
+  color: rgb(0, 187, 198);
+  @media only screen and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+    padding-right: 5px;
     font-size: 8px;
   }
 `;
@@ -98,38 +88,33 @@ const UserInput = styled.input`
   box-shadow: none;
   cursor: default !important;
 
-  font-family: "Fira Code";
+  font-family: 'Fira Code';
   font-size: 11pt;
 
   caret-color: transparent;
   color: transparent;
-  text-shadow: 0 0 0 rgb(0,253,59);
+  text-shadow: 0 0 0 rgb(0, 253, 59);
 
-  @media only screen 
-  and (max-device-width: 480px)
-  and (-webkit-min-device-pixel-ratio: 2) {
+  @media only screen and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
     font-size: 8px;
   }
-
 `;
 
 const Pointer = styled.span`
   position: absolute;
-  left: ${props => ((props.lineLength) * 9) + 30}px;
+  left: ${props => props.lineLength * 9 + 30}px;
   width: 10px;
   height: 20px;
 
-  background-color: ${props => (props.visible ? 'rgb(0,253,59)' : 'transparent')};
+  background-color: ${props =>
+    props.visible ? 'rgb(0,253,59)' : 'transparent'};
 
-  @media only screen 
-  and (max-device-width: 480px)
-  and (-webkit-min-device-pixel-ratio: 2) {
-  left: ${props => ((props.lineLength) * 5) + 14}px;
-  width: 5px;
-  height: 10px;
+  @media only screen and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+    left: ${props => props.lineLength * 5 + 14}px;
+    width: 5px;
+    height: 10px;
   }
 `;
-
 
 export default class Body extends Component {
   constructor(props) {
@@ -149,7 +134,11 @@ export default class Body extends Component {
     this.openURL = this.openURL.bind(this);
 
     /*  ===    CLASS VARIABLES    === */
-    this.actionManager = new ActionManager(this.addToHistory, this.clearHistory, this.openURL);
+    this.actionManager = new ActionManager(
+      this.addToHistory,
+      this.clearHistory,
+      this.openURL,
+    );
     this.w = null;
 
     /*  ===    INITAL STATE    === */
@@ -171,9 +160,9 @@ export default class Body extends Component {
   }
 
   setInitalWelcomeScreen() {
-    const outputs = WELCOME_MESSAGES.map((output, outputIndex) => (
-      this.getOutputLine(output, outputIndex)
-    ));
+    const outputs = WELCOME_MESSAGES.map((output, outputIndex) =>
+      this.getOutputLine(output, outputIndex),
+    );
     this.setState({ commandHistory: outputs });
   }
 
@@ -187,44 +176,29 @@ export default class Body extends Component {
 
   getInputLine(input) {
     return (
-      <InputLine
-        key={`${this.state.commandHistory.length} command`}
-      >
+      <InputLine key={`${this.state.commandHistory.length} command`}>
         <PreFixText isValid={this.state.commandIsValid}>
           {COMMAND_LINE_PREFIX}
         </PreFixText>
-        <FolderText>
-          {CURRENT_FOLDER_NAME}
-        </FolderText>
-        <UserInput
-          readOnly
-          spellCheck={false}
-          value={input}
-        />
+        <FolderText>{CURRENT_FOLDER_NAME}</FolderText>
+        <UserInput readOnly spellCheck={false} value={input} />
       </InputLine>
     );
   }
 
   getOutputLine(output, index) {
     return (
-      <InputLine
-        key={`${this.state.commandHistory.length}:${index} answer`}
-      >
-        <UserInput
-          readOnly
-          spellCheck={false}
-          value={output}
-        />
-      </InputLine>);
+      <InputLine key={`${this.state.commandHistory.length}:${index} answer`}>
+        <UserInput readOnly spellCheck={false} value={output} />
+      </InputLine>
+    );
   }
 
   writeToConsole(command) {
     const timeBetweenInput = 90;
     command.split('').forEach((char, index) => {
       setTimeout(() => {
-        this.setState(state => (
-          { userInput: state.userInput.concat(char) }
-        ));
+        this.setState(state => ({ userInput: state.userInput.concat(char) }));
       }, timeBetweenInput * (index + 1));
     });
   }
@@ -239,14 +213,23 @@ export default class Body extends Component {
   addToHistory(input, outputs, isValid) {
     const command = this.getInputLine(input);
 
-    const answers = outputs.map((output, outputIndex) => this.getOutputLine(output, outputIndex));
+    const answers = outputs.map((output, outputIndex) =>
+      this.getOutputLine(output, outputIndex),
+    );
 
-    this.setState((state) => {
-      const updatedHistory = [...state.commandHistory, [command, answers]];
-      return { commandHistory: updatedHistory, userInput: '', commandIsValid: isValid };
-    }, () => {
-      this.scrollView.scrollTop = this.scrollView.scrollHeight;
-    });
+    this.setState(
+      state => {
+        const updatedHistory = [...state.commandHistory, [command, answers]];
+        return {
+          commandHistory: updatedHistory,
+          userInput: '',
+          commandIsValid: isValid,
+        };
+      },
+      () => {
+        this.scrollView.scrollTop = this.scrollView.scrollHeight;
+      },
+    );
   }
 
   clearHistory() {
@@ -273,7 +256,9 @@ export default class Body extends Component {
     return (
       <Container
         onClick={() => this.userInputReference.focus()}
-        innerRef={(input) => { this.scrollView = input; }}
+        innerRef={input => {
+          this.scrollView = input;
+        }}
       >
         {this.state.commandHistory}
         <InputLine>
@@ -281,16 +266,16 @@ export default class Body extends Component {
             {COMMAND_LINE_PREFIX}
           </PreFixText>
 
-          <FolderText>
-            {CURRENT_FOLDER_NAME}
-          </FolderText>
+          <FolderText>{CURRENT_FOLDER_NAME}</FolderText>
           <UserInput
             spellCheck={false}
             autoCapitalize="none"
             value={this.state.userInput}
             onChange={this.handleUserInput}
             onKeyPress={this.handleKeyPress}
-            innerRef={(input) => { this.userInputReference = input; }}
+            innerRef={input => {
+              this.userInputReference = input;
+            }}
           />
           <Pointer
             visible={this.state.pointerVisible}
@@ -300,8 +285,8 @@ export default class Body extends Component {
               this.state.userInput.length
             }
           />
-        </InputLine >
-      </Container >
+        </InputLine>
+      </Container>
     );
   }
 }
