@@ -1,6 +1,15 @@
 {
-    "extends": "airbnb",
-
+    "extends": [
+        "airbnb",
+        "prettier"
+    ],
+    "globals": {
+        "document": true,
+        "window": true,
+        "URL": true,
+        "navigator": true,
+        "fetch": true
+    },
     "rules": {
         "react/jsx-filename-extension": 0
     }
