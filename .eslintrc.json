@@ -10,6 +10,7 @@
     },
     "rules": {
         "react/display-name": 0,
+        "react/sort-comp": 0,
         "react/jsx-filename-extension": 0,
         "react/no-unescaped-entities": 0,
         "no-console": 0

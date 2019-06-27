@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ActionManager from '../../data/actionManager';
 import {
@@ -116,177 +116,148 @@ const Pointer = styled.span`
   }
 `;
 
-export default class Body extends Component {
-  constructor(props) {
-    super(props);
+const Body = () => {
+  /*  ===    CLASS VARIABLES    === */
+  const w = useRef(null);
+  const userInputReference = useRef(null);
+  const scrollView = useRef(null);
 
-    /*  ===    BINDINGS    === */
-    this.setPointerVisibility = this.setPointerVisibility.bind(this);
-    this.handleUserInput = this.handleUserInput.bind(this);
-    this.handleEnter = this.handleEnter.bind(this);
-    this.writeToConsole = this.writeToConsole.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.addToHistory = this.addToHistory.bind(this);
-    this.getOutputLine = this.getOutputLine.bind(this);
-    this.getInputLine = this.getInputLine.bind(this);
-    this.setInitalWelcomeScreen = this.setInitalWelcomeScreen.bind(this);
-    this.clearHistory = this.clearHistory.bind(this);
-    this.openURL = this.openURL.bind(this);
+  const [pointerVisible, setPointerVisible] = useState(true);
+  const [userInput, setUserInput] = useState('');
+  const [commandIsValid, setCommandIsValid] = useState(true);
+  const [commandHistory, setCommandHistory] = useState(true);
 
-    /*  ===    CLASS VARIABLES    === */
-    this.actionManager = new ActionManager(
-      this.addToHistory,
-      this.clearHistory,
-      this.openURL,
-    );
-    this.w = null;
-
-    /*  ===    INITAL STATE    === */
-    this.state = {
-      pointerVisible: true,
-      userInput: '',
-      commandIsValid: true,
-      commandHistory: [],
-    };
-  }
-
-  componentDidMount() {
-    this.setInitalWelcomeScreen();
-    this.setPointerVisibility(true);
-    this.writeToConsole(INITIAL_INPUT);
-
-    this.userInputReference.focus();
-    this.w = window; // eslint-disable-line
-  }
-
-  setInitalWelcomeScreen() {
-    const outputs = WELCOME_MESSAGES.map((output, outputIndex) =>
-      this.getOutputLine(output, outputIndex),
-    );
-    this.setState({ commandHistory: outputs });
-  }
-
-  setPointerVisibility(pointerVisible) {
-    this.setState({ pointerVisible });
-
-    setTimeout(() => {
-      this.setPointerVisibility(!pointerVisible);
-    }, 600);
-  }
-
-  getInputLine(input) {
+  const getOutputLine = (output, index) => {
     return (
-      <InputLine key={`${this.state.commandHistory.length} command`}>
-        <PreFixText isValid={this.state.commandIsValid}>
-          {COMMAND_LINE_PREFIX}
-        </PreFixText>
+      <InputLine key={`${commandHistory.length}:${index} answer`}>
+        <UserInput readOnly spellCheck={false} value={output} />
+      </InputLine>
+    );
+  };
+
+  const setInitalWelcomeScreen = () => {
+    const outputs = WELCOME_MESSAGES.map((output, outputIndex) =>
+      getOutputLine(output, outputIndex),
+    );
+    setCommandHistory(outputs);
+  };
+
+  const writeToConsole = command => {
+    const timeBetweenInput = 90;
+    command.split('').forEach((char, index) => {
+      setTimeout(() => {
+        setUserInput(userInput.concat(char));
+      }, timeBetweenInput * (index + 1));
+    });
+  };
+
+  useEffect(() => {
+    setInitalWelcomeScreen();
+    const intervalId = setInterval(() => {
+      setPointerVisible(!pointerVisible);
+    }, 600);
+    setPointerVisible(true);
+    writeToConsole(INITIAL_INPUT);
+    w.current = window; // eslint-disable-line
+    if (userInputReference.current) {
+      userInputReference.current.focus();
+    }
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  const getInputLine = input => {
+    return (
+      <InputLine key={`${commandHistory.length} command`}>
+        <PreFixText isValid={commandIsValid}>{COMMAND_LINE_PREFIX}</PreFixText>
         <FolderText>{CURRENT_FOLDER_NAME}</FolderText>
         <UserInput readOnly spellCheck={false} value={input} />
       </InputLine>
     );
-  }
-
-  getOutputLine(output, index) {
-    return (
-      <InputLine key={`${this.state.commandHistory.length}:${index} answer`}>
-        <UserInput readOnly spellCheck={false} value={output} />
-      </InputLine>
-    );
-  }
-
-  writeToConsole(command) {
-    const timeBetweenInput = 90;
-    command.split('').forEach((char, index) => {
-      setTimeout(() => {
-        this.setState(state => ({ userInput: state.userInput.concat(char) }));
-      }, timeBetweenInput * (index + 1));
-    });
-  }
+  };
 
   /*  ===    ACTIONS    === */
-  openURL(url) {
-    if (this.w) {
-      this.w.open(url, '_blank');
+  const openURL = url => {
+    if (w.current) {
+      w.current.open(url, '_blank');
     }
-  }
+  };
 
-  addToHistory(input, outputs, isValid) {
-    const command = this.getInputLine(input);
+  const addToHistory = (input, outputs, isValid) => {
+    const command = getInputLine(input);
 
     const answers = outputs.map((output, outputIndex) =>
-      this.getOutputLine(output, outputIndex),
+      getOutputLine(output, outputIndex),
     );
 
-    this.setState(
-      state => {
-        const updatedHistory = [...state.commandHistory, [command, answers]];
-        return {
-          commandHistory: updatedHistory,
-          userInput: '',
-          commandIsValid: isValid,
-        };
-      },
-      () => {
-        this.scrollView.scrollTop = this.scrollView.scrollHeight;
-      },
-    );
-  }
-
-  clearHistory() {
-    this.setState({ commandHistory: [], userInput: '', commandIsValid: true });
-  }
-
-  /*  ===    INPUT HANDLERS    === */
-  handleEnter() {
-    const command = this.state.userInput.split(' ');
-    this.actionManager.handleInput(command);
-  }
-
-  handleKeyPress(e) {
-    if (e.key === 'Enter') {
-      this.handleEnter();
+    setUserInput('');
+    setCommandIsValid(isValid);
+    const updatedHistory = [...commandHistory, [command, answers]];
+    setCommandHistory(updatedHistory);
+    if (scrollView.current) {
+      scrollView.current.scrollTop = scrollView.current.scrollHeight;
     }
-  }
+  };
 
-  handleUserInput(e) {
-    this.setState({ userInput: e.target.value });
-  }
+  const clearHistory = () => {
+    setCommandHistory([]);
+    setUserInput('');
+    setCommandIsValid(true);
+  };
 
-  render() {
-    return (
-      <Container
-        onClick={() => this.userInputReference.focus()}
-        innerRef={input => {
-          this.scrollView = input;
-        }}
-      >
-        {this.state.commandHistory}
-        <InputLine>
-          <PreFixText isValid={this.state.commandIsValid}>
-            {COMMAND_LINE_PREFIX}
-          </PreFixText>
+  const handleUserInput = e => {
+    setUserInput(e.target.value);
+  };
 
-          <FolderText>{CURRENT_FOLDER_NAME}</FolderText>
-          <UserInput
-            spellCheck={false}
-            autoCapitalize="none"
-            value={this.state.userInput}
-            onChange={this.handleUserInput}
-            onKeyPress={this.handleKeyPress}
-            innerRef={input => {
-              this.userInputReference = input;
-            }}
-          />
-          <Pointer
-            visible={this.state.pointerVisible}
-            lineLength={
-              COMMAND_LINE_PREFIX.length +
-              CURRENT_FOLDER_NAME.length +
-              this.state.userInput.length
-            }
-          />
-        </InputLine>
-      </Container>
-    );
-  }
-}
+  const actionManager = useRef(
+    new ActionManager(addToHistory, clearHistory, openURL),
+  );
+
+  const handleEnter = () => {
+    const command = userInput.split(' ');
+    actionManager.current.handleInput(command);
+  };
+
+  const handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      handleEnter();
+    }
+  };
+
+  return (
+    <Container
+      onClick={() => {
+        if (userInputReference.current) {
+          userInputReference.current.focus();
+        }
+      }}
+      innerRef={scrollView}
+    >
+      {commandHistory}
+      <InputLine>
+        <PreFixText isValid={commandIsValid}>{COMMAND_LINE_PREFIX}</PreFixText>
+
+        <FolderText>{CURRENT_FOLDER_NAME}</FolderText>
+        <UserInput
+          spellCheck={false}
+          autoCapitalize="none"
+          value={userInput}
+          onChange={handleUserInput}
+          onKeyPress={handleKeyPress}
+          innerRef={userInputReference}
+        />
+        <Pointer
+          visible={pointerVisible}
+          lineLength={
+            COMMAND_LINE_PREFIX.length +
+            CURRENT_FOLDER_NAME.length +
+            userInput.length
+          }
+        />
+      </InputLine>
+    </Container>
+  );
+};
+
+export default Body;
