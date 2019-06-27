@@ -45,7 +45,7 @@ const Button = styled.div`
   }
 `;
 
-const TopBar = () => (
+const Header = () => (
   <Container>
     <Button color="rgb(255,59,48)" />
     <Button color="rgb(225, 204,0)" />
@@ -53,4 +53,4 @@ const TopBar = () => (
   </Container>
 );
 
-export default TopBar;
+export default Header;

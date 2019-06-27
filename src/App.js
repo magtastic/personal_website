@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Terminal from './components/terminal/';
+import Terminal from './components/Terminal';
 
 const Container = styled.div`
   height: 100%;

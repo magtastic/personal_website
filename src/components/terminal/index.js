@@ -1,15 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import Body from './body';
-import TopBar from './topBar';
+import Body from './Body';
+import Header from './Header';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   width: 80%;
-  margin-top: 10%;
+  margin-top: 20px;
 
   @media only screen and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
     width: 95%;
@@ -18,7 +16,7 @@ const Container = styled.div`
 
 const Terminal = () => (
   <Container>
-    <TopBar />
+    <Header />
     <Body />
   </Container>
 );
