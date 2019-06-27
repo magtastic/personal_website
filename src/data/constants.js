@@ -37,6 +37,7 @@ export const VALID_SOCIAL_MEDIAS = [
   'source-code',
   'instagram',
   'twitch',
+  'minesweeper',
 ];
 
 export const SOCIAL_MEDIAS_TO_URLS = {
@@ -44,6 +45,7 @@ export const SOCIAL_MEDIAS_TO_URLS = {
   twitter: 'https://twitter.com/MLafsson',
   github: 'https://github.com/magtastic',
   instagram: 'https://www.instagram.com/magtastic_fingerplastic',
+  minesweeper: 'https://mineswee.xyz/',
   twitch: 'https://www.twitch.tv/magtastic_fingerplastic/',
   'source-code': 'https://github.com/magtastic/cv',
 };
@@ -57,6 +59,7 @@ export const ANSWERS_FOR_COMMANDS = {
   'open instagram': ['opening instagram...'],
   'open source-code': ['opening source-code...'],
   'open twitch': ['opening twitch...'],
+  'open minesweeper': ['opening minesweeper...'],
   about: [
     'My name is Magnús and I am a software developer.',
     'I live in Valencia, with my girlfriend, and our cat and dog.',
