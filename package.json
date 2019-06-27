@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "eslint": "^4.19.1",
-    "react": "^16.4.0",
+    "react": "^16.8.6",
     "react-dom": "^16.4.0",
     "react-scripts": "1.1.4",
     "styled-components": "^2.4.1"
